@@ -1,25 +1,35 @@
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {
-        multiset<int> m;
+        //second approach
+        
+        int l = matrix[0][0];
         
         int n = matrix.size();
         
-        for(int i=0;i<n;i++)
+        int r = matrix[n-1][n-1];
+        
+        int count;
+        
+        while(l<r)
         {
-            for(int j=0;j<n;j++)
+            int mid = l + (r-l)/2;
+            
+            count = 0;
+            
+            for(int i=0;i<n;i++)
             {
-                m.insert(matrix[i][j]);
+                count += upper_bound(matrix[i].begin(),matrix[i].end(),mid) - matrix[i].begin();
             }
+            
+            if(count<k){
+                l = mid+1; 
+            }else{
+                r = mid;
+            }
+            
         }
         
-        auto itr = m.begin();
-        k--;
-        while(k--)
-        {
-            itr++;
-        }
-        
-        return *itr;
+        return l;
     }
 };
