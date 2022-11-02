@@ -1,21 +1,21 @@
 class Solution {
 public:
     
-    int solve(int i,int j,vector<vector<int>>& grid,int n,int m)
+    
+    //dfs necessary as to know the which way the ball came out
+    
+    int dfs(int i,int j,int n,int m,vector<vector<int>>& grid)
     {
-        if(i==n)
-        {
-            return j;
-        }
+        if(i==n) return j;
         
         if(grid[i][j]==1 && j+1<m && grid[i][j+1]==1)
         {
-            return solve(i+1,j+1,grid,n,m);
+            return dfs(i+1,j+1,n,m,grid);
         }
         
         if(grid[i][j]==-1 && j-1>=0 && grid[i][j-1]==-1)
         {
-            return solve(i+1,j-1,grid,n,m);
+            return dfs(i+1,j-1,n,m,grid);
         }
         
         return -1;
@@ -30,7 +30,7 @@ public:
         
         for(int i=0;i<m;i++)
         {
-            ans[i] = solve(0,i,grid,n,m);
+            ans[i] = dfs(0,i,n,m,grid);
         }
         
         return ans;
